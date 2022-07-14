@@ -38,7 +38,7 @@ export const NavBar = () => {
       </NextLink>
 
       <Spacer css={{ flex: 1 }}></Spacer>
-      <NextLink href="favorites" passHref>
+      <NextLink href="/favorites" passHref>
         <Text style={{ cursor: "pointer" }}>Favoritos</Text>
       </NextLink>
     </div>
