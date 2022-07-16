@@ -134,15 +134,25 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
     paths: pokemonsName.map((name) => ({
       params: { name },
     })),
-    fallback: false,
+    fallback: "blocking",
   };
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
-
+  const pokemon = await getPokemonInfo(name);
+  if (!pokemon) {
+    //if dosent exists
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false, // porque puede ser que ahora ya exista un pokemon en ese id
+      },
+    };
+  }
   return {
-    props: { pokemon: await getPokemonInfo(name) },
+    props: { pokemon },
+    revalidate: 86400,
   };
 };
 
